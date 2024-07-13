@@ -3,3 +3,155 @@ title: IEP Goal Generator
 layout: template
 filename: iep-goal-generator.html
 --- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IEP Goal Generator</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function generateIepGoal(student, pronoun, areaOfNeed, goal, goalLevel, levelOfCueing) {
+                var annualGoalTemplate = "By the end of the IEP year, " + student + " will improve " + pronoun + " " + areaOfNeed + " by " + goal + " with " + goalLevel + " accuracy and " + levelOfCueing + " prompts.";
+                return annualGoalTemplate;
+            }
+
+            function generateGoal() {
+                var student = document.getElementById("student").value;
+                var pronoun = document.getElementById("pronoun").value;
+                var areaOfNeed = document.getElementById("area_of_need").value;
+                var goal = document.getElementById("goal").value;
+                var goalLevel = document.getElementById("goal_level").value;
+                var levelOfCueing = document.getElementById("level_of_cueing").value;
+
+                var annualGoal = generateIepGoal(student, pronoun, areaOfNeed, goal, goalLevel, levelOfCueing);
+
+                document.getElementById("result").innerText = "Annual Goal: " + annualGoal;
+            }
+
+            function updateGoals() {
+                var areaOfNeed = document.getElementById("area_of_need").value;
+                var goalSelect = document.getElementById("goal");
+                goalSelect.innerHTML = ""; // Clear existing options
+
+                var goals = {
+                    "articulation": [
+                        "producing the '' sound in syllables",
+                        "producing the '' sound in words",
+                        "producing the '' sound in multisyllabic words",
+                        "producing the '' sound in sentences",
+                        "producing the '' sound in conversation"
+                    ],
+                    "fluency": [
+                        "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce words more smoothly",
+                        "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce sentences more smoothly",
+                        "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) in conversational exchanges"
+                    ],
+                    "receptive language": [
+                        "identifying objects/nouns",
+                        "identifying 3 items in basic categories (e.g. food, clothing, animals)",
+                        "following 1-step instructions during structured activities",
+                        "answering yes/no questions",
+                        "answering who/what/when/where questions",
+                        "answering why/how questions"
+                    ],
+                    "expressive language": [
+                        "producing 2-3 word phrases",
+                        "producing 3-4 word sentences",
+                        "using regular and irregular past tense verbs in sentences",
+                        "answering who/what/when/where questions",
+                        "answering why/how questions",
+                        "producing complex sentences using conjunctions",
+                        "retelling a story/narrative including key elements (who, what, when where)"
+                    ],
+                    "social skills": [
+                        "making and responding to greetings",
+                        "making requests for desired items/activities",
+                        "using polite social phrases (e.g. 'please', 'thank you', 'sorry') appropriately",
+                        "identifying feelings presented in pictures, videos, or social scenarios",
+                        "identifying the 'size of the problem' in real or hypothetical social scenarios",
+                        "identifying behaviors as 'expected' or 'unexpected' in social scenarios and explaining why",
+                        "identifying 2 possible solutions to real or hypothetical social problems",
+                        "demonstrating appropriate turn-taking in conversation",
+                        "maintaining a topic by producing 2 relevant follow-up questions or comments"
+                    ],
+                    "AAC usage": [
+                        "using AAC to request items/activities",
+                        "using AAC to comment or express opinions",
+                        "selecting 1-2 icons on a SGD to participate in speech activities",
+                        "using AAC to make greetings",
+                        "using AAC to express feelings",
+                        "using AAC to answer questions"
+                    ]
+                };
+
+                var selectedGoals = goals[areaOfNeed];
+                selectedGoals.forEach(function(goal) {
+                    var option = document.createElement("option");
+                    option.value = goal;
+                    option.text = goal;
+                    goalSelect.add(option);
+                });
+            }
+
+            document.getElementById("area_of_need").addEventListener("change", updateGoals); // Update goals when area of need changes
+
+            document.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                generateGoal();
+            });
+
+            updateGoals(); // Initialize goals dropdown on page load
+        });
+    </script>
+</head>
+<body>
+    <form>
+        <label for="student">Student’s Name:</label><br>
+        <input type="text" id="student" name="student" required><br><br>
+        
+        <label for="pronoun">Student’s gender:</label><br>
+        <select id="pronoun" name="pronoun" required>
+            <option value="his">Male</option>
+            <option value="her">Female</option>
+            <option value="their">Nonbinary</option>
+        </select><br><br>
+
+        <label for="area_of_need">Area of Need:</label><br>
+        <select id="area_of_need" name="area_of_need" required>
+            <option value="articulation">Articulation</option>
+            <option value="fluency">Fluency</option>
+            <option value="receptive language">Receptive Language</option>
+            <option value="expressive language">Expressive Language</option>
+            <option value="social skills">Social Skills</option>
+            <option value="AAC usage">AAC</option>
+        </select><br><br>
+
+        <label for="goal">Goal:</label><br>
+        <select id="goal" name="goal" required>
+            <!-- Goal options will be populated dynamically based on the selected area of need -->
+        </select><br><br>
+
+        <label for="goal_level">Goal Level:</label><br>
+        <select id="goal_level" name="goal_level" required>
+            <option value="60%">60%</option>
+            <option value="70%">70%</option>
+            <option value="80%">80%</option>
+            <option value="90%">90%</option>
+            <option value="95%">95%</option>
+        </select><br><br>
+
+        <label for="level_of_cueing">Any prompts?:</label><br>
+        <select id="level_of_cueing" name="level_of_cueing" required>
+            <option value="no">No (independent)</option>
+            <option value="minimal">Minimal</option>
+            <option value="moderate">Moderate</option>
+            <option value="maximal">Maximal</option>
+            <option value="verbal">Verbal</option>
+            <option value="visual">Visual</option>
+        </select><br><br>
+
+        <input type="submit" value="Generate Goal">
+    </form>
+
+    <h2 id="result">Annual Goal: </h2>
+</body>
+</html>
