@@ -4,7 +4,7 @@ layout: template
 filename: iep-goal-generator.html
 --- 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@ filename: iep-goal-generator.html
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #daebe9;
             margin: 0;
             padding: 20px;
         }
@@ -26,12 +26,12 @@ filename: iep-goal-generator.html
         }
         h1 {
             text-align: center;
-            color: #007bff;
+            color: #0d9182;
         }
         form {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: left;
         }
         label {
             margin-bottom: 5px;
@@ -39,14 +39,14 @@ filename: iep-goal-generator.html
         select, input[type="text"] {
             padding: 8px;
             margin-bottom: 10px;
-            width: 100%;
+            width: 90%;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
         .btn-generate {
             padding: 12px 20px;
-            background-color: #007bff;
+            background-color: #0d9182;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -55,12 +55,12 @@ filename: iep-goal-generator.html
             transition: background-color 0.3s ease;
         }
         .btn-generate:hover {
-            background-color: #0056b3;
+            background-color: #046e62;
         }
         #result {
             margin-top: 20px;
             padding: 10px;
-            background-color: #f0f0f0;
+            background-color: #daebe9;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
@@ -70,59 +70,69 @@ filename: iep-goal-generator.html
     <div class="container">
         <h1>IEP Goal Generator</h1>
         <form onsubmit="event.preventDefault(); generateGoal();">
-            <label for="student">Student’s Name:</label>
-            <input type="text" id="student" name="student" required>
+            <label for="student">Student’s Name:</label><br>
+            <input type="text" id="student" name="student" required><br><br>
             
-            <label for="pronoun">Student’s Gender:</label>
+            <label for="pronoun">Student’s gender:</label><br>
             <select id="pronoun" name="pronoun" required>
                 <option value="his">Male</option>
                 <option value="her">Female</option>
                 <option value="their">Nonbinary</option>
-            </select>
-
-            <label for="area_of_need">Area of Need:</label>
-            <select id="area_of_need" name="area_of_need" onchange="updateGoals()" required>
+            </select><br><br>
+    
+            <label for="area_of_need">Area of Need:</label><br>
+            <select id="area_of_need" name="area_of_need" required>
                 <option value="articulation">Articulation</option>
                 <option value="fluency">Fluency</option>
                 <option value="receptive language">Receptive Language</option>
                 <option value="expressive language">Expressive Language</option>
                 <option value="social skills">Social Skills</option>
                 <option value="AAC usage">AAC</option>
-            </select>
-
-            <label for="goal">Goal:</label>
+            </select><br><br>
+    
+            <label for="goal">Goal:</label><br>
             <select id="goal" name="goal" required>
                 <!-- Goal options will be populated dynamically based on the selected area of need -->
-            </select>
-
-            <label for="goal_level">Goal Level:</label>
+            </select><br><br>
+    
+            <label for="goal_level">Goal Level:</label><br>
             <select id="goal_level" name="goal_level" required>
                 <option value="60%">60%</option>
                 <option value="70%">70%</option>
                 <option value="80%">80%</option>
                 <option value="90%">90%</option>
                 <option value="95%">95%</option>
-            </select>
-
-            <label for="level_of_cueing">Level of Cueing:</label>
+            </select><br><br>
+    
+            <label for="level_of_cueing">Any prompts?:</label><br>
             <select id="level_of_cueing" name="level_of_cueing" required>
-                <option value="no">No (Independent)</option>
+                <option value="no">No (independent)</option>
                 <option value="minimal">Minimal</option>
                 <option value="moderate">Moderate</option>
                 <option value="maximal">Maximal</option>
                 <option value="verbal">Verbal</option>
                 <option value="visual">Visual</option>
-            </select>
-
+            </select><br><br>
+    
             <button type="submit" class="btn-generate">Generate Goal</button>
         </form>
-
+    
         <div id="result">
             <strong>Annual Goal:</strong> <span id="annual_goal"></span>
         </div>
     </div>
-
+        
     <script>
+        function generateIepGoal(student, pronoun, areaOfNeed, goal, goalLevel, levelOfCueing) {
+            // Define template
+            var annualGoalTemplate = "By the end of the IEP year, " + student + " will improve " + pronoun + " " + areaOfNeed + " by " + goal + " with " + goalLevel + " accuracy and " + levelOfCueing + " prompts.";
+
+            // Generate annual goal
+            var annualGoal = annualGoalTemplate;
+
+            return annualGoal;
+        }
+
         function generateGoal() {
             var student = document.getElementById("student").value;
             var pronoun = document.getElementById("pronoun").value;
@@ -133,7 +143,7 @@ filename: iep-goal-generator.html
 
             var annualGoal = generateIepGoal(student, pronoun, areaOfNeed, goal, goalLevel, levelOfCueing);
 
-            document.getElementById("annual_goal").innerText = annualGoal;
+            document.getElementById("result").innerText = "Annual Goal: " + annualGoal;
         }
 
         function updateGoals() {
@@ -143,46 +153,52 @@ filename: iep-goal-generator.html
 
             var goals = {
                 "articulation": [
-                    "Producing the '' sound in syllables",
-                    "Producing the '' sound in words",
-                    "Producing the '' sound in multisyllabic words",
-                    "Producing the '' sound in sentences",
-                    "Producing the '' sound in conversation"
+                    "producing the '' sound in syllables",
+                    "producing the '' sound in words",
+                    "producing the '' sound in multisyllabic words",
+                    "producing the '' sound in sentences",
+                    "producing the '' sound in conversation"
                 ],
                 "fluency": [
-                    "Using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce words more smoothly",
-                    "Using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce sentences more smoothly",
-                    "Using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) in conversational exchanges"
+                    "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce words more smoothly",
+                    "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) to produce sentences more smoothly",
+                    "using a fluency enhancing technique (e.g. relaxed breath, easy voice, light contact) in conversational exchanges"
                 ],
                 "receptive language": [
-                    "Identifying objects/nouns",
-                    "Identifying 3 items in basic categories (e.g. food, clothing, animals)",
-                    "Following 1-step instructions during structured activities",
-                    "Answering yes/no questions",
-                    "Answering who/what/when/where questions",
-                    "Answering why/how questions"
+                    "identifying objects/nouns",
+                    "identifying 3 items in basic categories (e.g. food, clothing, animals)",
+                    "following 1-step instructions during structured activities",
+                    "answering yes/no questions",
+                    "answering who/what/when/where questions",
+                    "answering why/how questions"
                 ],
                 "expressive language": [
-                    "Producing 2-3 word phrases",
-                    "Producing 3-4 word sentences",
-                    "Using regular and irregular past tense verbs in sentences",
-                    "Answering who/what/when/where questions",
-                    "Answering why/how questions",
-                    "Producing complex sentences using conjunctions",
-                    "Retelling a story/narrative including key elements (who, what, when where)"
+                    "producing 2-3 word phrases",
+                    "producing 3-4 word sentences",
+                    "using regular and irregular past tense verbs in sentences",
+                    "answering who/what/when/where questions",
+                    "answering why/how questions",
+                    "producing complex sentences using conjunctions",
+                    "retelling a story/narrative including key elements (who, what, when where)"
                 ],
                 "social skills": [
-                    "Initiating conversations",
-                    "Maintaining eye contact",
-                    "Taking turns in conversation"
+                    "making and responding to greetings",
+                    "making requests for desired items/activities",
+                    "using polite social phrases (e.g. 'please', 'thank you', 'sorry') appropriately",
+                    "identifying feelings presented in pictures, videos, or social scenarios",
+                    "identifying the 'size of the problem' in real or hypothetical social scenarios",
+                    "identifying behaviors as 'expected' or 'unexpected' in social scenarios and explaining why",
+                    "identifying 2 possible solutions to real or hypothetical social problems",
+                    "demonstrating appropriate turn-taking in conversation",
+                    "maintaining a topic by producing 2 relevant follow-up questions or comments"
                 ],
                 "AAC usage": [
-                    "Using AAC to request items/activities",
-                    "Using AAC to comment or express opinions",
-                    "Selecting 1-2 icons on a SGD to participate in speech activities",
-                    "Using AAC to make greetings",
-                    "Using AAC to express feelings",
-                    "Using AAC to answer questions"
+                    "using AAC to request items/activities",
+                    "using AAC to comment or express opinions",
+                    "selecting 1-2 icons on a SGD to participate in speech activities",
+                    "using AAC to make greetings",
+                    "using AAC to express feelings",
+                    "using AAC to answer questions"
                 ]
             };
 
@@ -190,10 +206,18 @@ filename: iep-goal-generator.html
             selectedGoals.forEach(function(goal) {
                 var option = document.createElement("option");
                 option.value = goal;
-                option.textContent = goal;
-                goalSelect.appendChild(option);
+                option.text = goal;
+                goalSelect.add(option);
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateGoals(); // Initialize goals dropdown on page load
+
+            document.getElementById("area_of_need").addEventListener("change", updateGoals); // Update goals when area of need changes
+        });
     </script>
+
 </body>
 </html>
+
